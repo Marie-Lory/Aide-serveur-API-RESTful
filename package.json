@@ -1,0 +1,30 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "env-cmd -f ./env/.env nodemon --inspect ./bin/www",
+    "dev": "env-cmd -f ./env/.env.dev nodemon ./bin/www",
+    "prod": "env-cmd -f ./env/.env.prod nodemon ./bin/www"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "~1.4.4",
+    "cookie-session": "^2.1.0",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "ejs": "^3.1.10",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.1",
+    "morgan": "~1.9.1",
+    "multer": "^2.0.1",
+    "nodemon": "^2.0.20"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.10",
+    "env-cmd": "^10.1.0"
+  }
+}
