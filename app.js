@@ -133,18 +133,13 @@ app.delete('/users/:email', async (req, res) => {
   }
 });
 
-// Documentation API
-app.get('/views/api-docs', (req, res) => {
-  res.render('api-docs'); // Créez une page de documentation dans views/api-docs.ejs
-});
-
 // Page d'accueil
 app.get('/views/home', (req, res) => {
   res.render('home', { user: req.sessionUser });
 });
 
 // Dashboard
-app.get('/dashboard', async (req, res) => {
+app.get('/views/dashboard', async (req, res) => {
   if (!req.sessionUser) {
     return res.redirect('/'); // ou /login si vous avez une page login
   }
@@ -162,7 +157,7 @@ app.get('/dashboard', async (req, res) => {
       reservations
     });
   } catch (err) {
-    console.error('Erreur dans /dashboard:', err);
+    console.error('Erreur dans /views/dashboard:', err);
     res.status(500).send('Erreur serveur');
   }
 });
