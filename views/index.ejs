@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Liste des utilisateurs</title>
+  <link rel="stylesheet" href="../public/assets/css/index.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-md">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/logout">Déconnexion</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item text-uppercase"><a class="nav-link" href="/views/CRUD-catways.ejs">Catways</a></li>
+                <li class="nav-item text-uppercase"><a class="nav-link" href="/views/CRUD-reservation.ejs">Réservations</a></li>
+                <li class="nav-item text-uppercase"><a class="nav-link" href="/views/CRUD-users.ejs">Utilisateurs</a></li>
+                <li class="nav-item text-uppercase"><a class="nav-link" href="/views/dashboard.ejs">Tableau de bord</a></li>
+              </ul>
+            </div>
+        </div>
+    </nav>
+  </header>
+  <h1>Liste des utilisateurs</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Âge</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.nom %></td>
+          <td><%= user.email %></td>
+          <td><%= user.age %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</body>
+</html>

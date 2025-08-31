@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Gestion des Catways - CRUD</title>
+    <link rel="stylesheet" href="./CRUD-catways.css">
+</head>
+<body>
+    <h1>Gestion des Passerelles (Catways) - CRUD</h1>
+
+    <!-- Formulaire de création -->
+    <h2>Créer une nouvelle passerelle</h2>
+    <form action="/catways" method="POST">
+        <label for="catwayNumber">Numéro de la passerelle :</label>
+        <input type="text" id="catwayNumber" name="catwayNumber" required />
+
+        <label for="catwayType">Type :</label>
+        <select id="catwayType" name="catwayType" required>
+            <option value="long">Long</option>
+            <option value="short">Court</option>
+        </select>
+
+        <label for="catwayState">État :</label>
+        <select id="catwayState" name="catwayState" required>
+            <option value="bon état">Bon état</option>
+            <option value="En cours de réparation. Ne peut être réservée actuellement">En cours de réparation</option>
+            <option value="Plusieurs grandes tâches de peinture bleue sur le ponton">Tâche de peinture bleue</option>
+            <option value="grosse tâche d'huile et trou en fin de ponton">Tâche d'huile/trou</option>
+            <option value="2 planches bougent lorsqu'on marche dessus">Planches mobiles</option>
+        </select>
+
+        <button type="submit">Créer</button>
+    </form>
+
+    <!-- Liste des passerelles existantes -->
+    <h2>Liste des Passerelles</h2>
+    <% if (catways && catways.length > 0) { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>Numéro</th>
+                    <th>Type</th>
+                    <th>État</th>
+                    <th>Créé le</th>
+                    <th>Mis à jour le</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% catways.forEach(function(catway) { %>
+                    <tr>
+                        <td><%= catway.catwayNumber %></td>
+                        <td><%= catway.catwayType %></td>
+                        <td><%= catway.catwayState %></td>
+                        <td><%= catway.createdAt.toLocaleString() %></td>
+                        <td><%= catway.updatedAt.toLocaleString() %></td>
+                        <td class="actions">
+                            <!-- Modifier -->
+                            <form action="/catways/<%= catway._id %>?_method=PUT" method="POST" style="display:inline;">
+                                <button type="submit">Modifier</button>
+                            </form>
+                            <!-- Supprimer -->
+                            <form action="/catways/<%= catway._id %>?_method=DELETE" method="POST" style="display:inline;">
+                                <button type="submit" onclick="return confirm('Voulez-vous vraiment supprimer cette passerelle ?')">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>Aucune passerelle enregistrée.</p>
+    <% } %>
+
+    <!-- Formulaire de mise à jour (optionnel, peut aussi faire une modale ou une autre page) -->
+    <!-- Vous pouvez créer une page dédiée pour la modification si nécessaire -->
+
+    <!-- Messages de succès ou d'erreur -->
+    <% if (successMessage) { %>
+        <p class="success"><%= successMessage %></p>
+    <% } %>
+    <% if (errorMessage) { %>
+        <p class="error"><%= errorMessage %></p>
+    <% } %>
+</body>
+</html>

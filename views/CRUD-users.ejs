@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Gestion des Utilisateurs</title>
+    <link rel="stylesheet" href="./CRUD-users.css">
+</head>
+<body>
+
+<h1>Gestion des Utilisateurs</h1>
+
+<!-- Formulaire pour créer un nouvel utilisateur -->
+<h2>Créer un Nouvel Utilisateur</h2>
+<form action="/users" method="POST">
+    <label for="userName">Nom d'utilisateur :</label>
+    <input type="text" id="userName" name="userName" required />
+
+    <label for="email">Email :</label>
+    <input type="email" id="email" name="email" required />
+
+    <label for="password">Mot de passe :</label>
+    <input type="password" id="password" name="password" required minlength="6" />
+
+    <button type="submit">Créer Utilisateur</button>
+</form>
+
+<!-- Liste des utilisateurs existants -->
+<h2>Liste des Utilisateurs</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Nom d'utilisateur</th>
+            <th>Email</th>
+            <th>Date de Création</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% users.forEach(function(user) { %>
+            <tr>
+                <td><%= user.userName %></td>
+                <td><%= user.email %></td>
+                <td><%= user.createdAt.toLocaleString() %></td>
+                <td class="actions">
+                    <!-- Modifier -->
+                    <form action="/users/<%= user._id %>?_method=GET" method="GET" style="display:inline;">
+                        <button type="submit">Modifier</button>
+                    </form>
+                    <!-- Supprimer -->
+                    <form action="/users/<%= user._id %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+                        <button type="submit" class="delete">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
+
+<!-- Formulaire de modification (affiché si une modification est en cours) -->
+<% if (userToEdit) { %>
+<h2>Modifier l'utilisateur</h2>
+<form action="/users/<%= userToEdit._id %>?_method=PUT" method="POST">
+    <label for="userNameEdit">Nom d'utilisateur :</label>
+    <input type="text" id="userNameEdit" name="userName" value="<%= userToEdit.userName %>" required />
+
+    <label for="emailEdit">Email :</label>
+    <input type="email" id="emailEdit" name="email" value="<%= userToEdit.email %>" required />
+
+    <label for="passwordEdit">Mot de passe (laisser vide pour ne pas changer) :</label>
+    <input type="password" id="passwordEdit" name="password" minlength="6" />
+
+    <button type="submit">Mettre à jour</button>
+</form>
+<% } %>
+
+</body>
+</html>
