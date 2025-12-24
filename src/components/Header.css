@@ -1,0 +1,9 @@
+header {
+    padding: 1rem;
+     background: #f0f0f0;
+}
+
+nav {
+    display: flex;
+    gap: 1rem;
+}
