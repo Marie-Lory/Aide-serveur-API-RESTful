@@ -10,23 +10,28 @@ export default function Home() {
   const API_URL = import.meta.env.VITE_API_URL;
 
   const login = async () => {
-    const encodedEmail = encodeURIComponent(email);
+    if (!email.trim()) {
+      setError("Veuillez saisir un email.");
+      return;
+    }
 
     try {
-      const res = await fetch(
-        `${API_URL}/api/users/${encodedEmail}`
-      );
+      const res = await fetch(`${API_URL}/api/users/${email}`);
 
-      if (!res.ok) {
-        throw new Error("Erreur API");
+      if (res.ok) {
+        const user = await res.json();
+        localStorage.setItem("user", JSON.stringify(user));
+        navigate("/Dashboard");
+      } else if (res.status === 404) {
+        // Email non trouvé
+        setError("Utilisateur non trouvé. Veuillez vérifier votre email.");
+      } else {
+        // Autre erreur
+        setError("Une erreur est survenue. Veuillez réessayer.");
       }
-
-      const user = await res.json();
-      localStorage.setItem("user", JSON.stringify(user));
-      navigate("/Dashboard");
-
     } catch (err) {
-        console.error("Erreur fetch :", err);
+      console.error(err);
+      setError("Impossible de se connecter. Vérifiez la connexion au serveur.");
     }
   };
 
