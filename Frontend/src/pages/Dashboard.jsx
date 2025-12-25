@@ -39,7 +39,7 @@ export default function Dashboard() {
           if (!owner) continue;
 
           // Récupérer les réservations pour ce catway
-          const res = await fetch(`http://localhost:3000/api/catways/${catway.catwayNumber}/reservations`);
+          const res = await fetch(`${API_URL}/api/catways/${catway.catwayNumber}/reservations`);
           if (!res.ok) continue;
 
           const reservations = await res.json();
@@ -156,4 +156,5 @@ export default function Dashboard() {
       </footer>
     </div>
   );
+
 }
