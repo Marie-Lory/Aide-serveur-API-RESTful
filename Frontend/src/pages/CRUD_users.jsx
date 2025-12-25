@@ -1,8 +1,6 @@
 import "../assets/CSS_JS/global.css";
 import { Link } from "react-router-dom";
 
-const API_URL = `${API_URL}/api/users`;
-
 export default function CRUD_users() {
   return (
     <div className="App">
@@ -77,4 +75,5 @@ export default function CRUD_users() {
       </footer>
     </div>
   );
+
 }
