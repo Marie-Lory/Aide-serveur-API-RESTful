@@ -1,8 +1,6 @@
 import "../assets/CSS_JS/global.css";
 import { Link } from "react-router-dom";
 
-const API_URL = `${API_URL}/api/catways`;
-
 export default function CRUD_reservation() {
   return (
     <div className="App">
@@ -78,4 +76,5 @@ export default function CRUD_reservation() {
       </footer>
     </div>
   );
+
 }
