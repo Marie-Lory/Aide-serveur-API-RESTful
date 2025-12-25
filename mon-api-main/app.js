@@ -1,34 +1,26 @@
 const express = require('express');
 const cors = require("cors");
-const path = require('path');
 const mongoose = require('mongoose');
-require("dotenv").config(); // ✅ IMPORTANT
+require("dotenv").config();
 
 const userRoutes = require('./routes/userRoutes');
 const catwayRoutes = require('./routes/catwayRoutes');
 const reservationRoutes = require('./routes/reservationRoutes');
-const userModel = require('./models/userModel');
 
 const app = express();
 
 /* ======================
-   MIDDLEWARES GLOBAUX
+   MIDDLEWARES
 ====================== */
 app.use(cors({
-  origin: "*", // OK pour le développement
+  origin: "*",
 }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 /* ======================
-   TEMPLATE ENGINE (EJS)
-====================== */
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-/* ======================
-   CONNEXION MONGODB ATLAS
+   CONNEXION MONGODB
 ====================== */
 mongoose
   .connect(process.env.MONGODB_URI)
@@ -43,21 +35,13 @@ app.use('/api/catways', catwayRoutes);
 app.use('/api/catways/:id/reservations', reservationRoutes);
 
 /* ======================
-   FICHIERS STATIQUES
+   ENDPOINT DE TEST
 ====================== */
-app.use(express.static('public'));
-
-/* ======================
-   PAGE D'ACCUEIL (EJS)
-====================== */
-app.get('/', async (req, res) => {
-  try {
-    const users = await userModel.find();
-    res.render('index', { users });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Erreur serveur');
-  }
+app.get('/', (req, res) => {
+  res.json({
+    status: 'API OK',
+    message: 'Backend opérationnel',
+  });
 });
 
 /* ======================
@@ -69,7 +53,7 @@ app.use((err, req, res, next) => {
 });
 
 /* ======================
-   LANCEMENT DU SERVEUR
+   LANCEMENT SERVEUR
 ====================== */
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () =>
